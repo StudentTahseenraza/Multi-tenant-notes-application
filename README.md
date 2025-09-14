@@ -1,7 +1,6 @@
 Multi-Tenant SaaS Notes Application
 A secure, scalable, and fully-featured multi-tenant notes management application built with React, Node.js, and MongoDB, deployed on Vercel.
 
-https://img.shields.io/badge/SaaS-Multi--Tenant-blue https://img.shields.io/badge/Deployed%2520on-Vercel-black https://img.shields.io/badge/Frontend-React%252BVite-blue https://img.shields.io/badge/Backend-Node.js%252BExpress-green https://img.shields.io/badge/Database-MongoDB-green
 
 🌟 Features
 🔐 Authentication & Authorization
