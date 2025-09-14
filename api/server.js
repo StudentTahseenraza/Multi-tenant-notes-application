@@ -24,9 +24,15 @@ mongoose.connect(MONGODB_URI)
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://your-frontend-domain.vercel.app'],
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://multi-tenant-notes-application-b1zj.vercel.app', // ✅ add your frontend deploy URL
+    'https://multi-tenant-notes-application.vercel.app'       // ✅ if frontend & backend both on vercel
+  ],
   credentials: true
 }));
+
 app.use(express.json());
 
 // Add request logging middleware for debugging
