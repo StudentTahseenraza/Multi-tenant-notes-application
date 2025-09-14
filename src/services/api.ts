@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://multi-tenant-notes-application.vercel.app';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://multi-tenant-notes-application.onrender.com';
 
 class ApiService {
   private token: string | null = null;
