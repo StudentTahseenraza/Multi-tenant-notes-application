@@ -22,23 +22,26 @@ export async function initializeDatabase() {
   console.log("Acme tenant:", acmeTenant);
   console.log("Globex tenant:", globexTenant);
 
-  // Helper to create or update user
+  // Helper to create or update user safely
   async function createOrUpdateUser(email, plainPassword, tenantId, role = "member") {
-  let user = await User.findOne({ email, tenantId });
+    let user = await User.findOne({ email, tenantId });
 
-  if (!user) {
-    // Let mongoose pre-save hook hash password
-    user = new User({ email, password: plainPassword, tenantId, role });
-    await user.save();
-    console.log(`Created user: ${email}`);
-  } else {
-    // Update password in plain text, pre-save will hash
-    user.password = plainPassword;
-    await user.save();
-    console.log(`Updated password for: ${email}`);
+    if (!user) {
+      // Fresh user → pre-save hook will hash
+      user = new User({ email, password: plainPassword, tenantId, role });
+      await user.save();
+      console.log(`✅ Created user: ${email}`);
+    } else {
+      // Fix password only if it's not hashed yet
+      if (!user.password.startsWith("$2")) {
+        user.password = plainPassword; // pre-save will hash
+        await user.save();
+        console.log(`🔄 Fixed password for: ${email}`);
+      } else {
+        console.log(`ℹ️ User already has hashed password: ${email}`);
+      }
+    }
   }
-}
-
 
   // Create/update users
   await createOrUpdateUser("admin@acme.test", "password", acmeTenant._id, "admin");
@@ -48,10 +51,10 @@ export async function initializeDatabase() {
 
   // Log all users
   const users = await User.find().populate("tenantId");
-  console.log("Total users in database:", users.length);
+  console.log(`👥 Total users in database: ${users.length}`);
   users.forEach(u =>
-    console.log(`User: ${u.email}, Tenant: ${u.tenantId?.name}`)
+    console.log(`- ${u.email} | Tenant: ${u.tenantId?.name} | Role: ${u.role}`)
   );
 
-  console.log("Database initialized with test data");
+  console.log("✅ Database initialized with test data");
 }
