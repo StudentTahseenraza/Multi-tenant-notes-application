@@ -27,7 +27,7 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    'https://multi-tenant-notes-application-b1zj.vercel.app', // ✅ add your frontend deploy URL
+    'https://multi-tenant-notes-application-4xsq.vercel.app', // ✅ add your frontend deploy URL
     'https://multi-tenant-notes-application.vercel.app'       // ✅ if frontend & backend both on vercel
   ],
   credentials: true
